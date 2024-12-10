@@ -1,0 +1,49 @@
+Program:
+    '---'
+    statements*=statement
+    '---'
+;
+
+statement:
+    equation | symbol_list | solve | print | integrate | differentiate | Comment
+;
+
+equation:
+    'equation ' variable ': ' expression '=' expression
+;
+
+expression:
+    term (('+' | '-' | '*' | '/' | '^') term)*
+;
+
+term:
+    NUM | variable 
+        | '(' expression ')'
+        | NUM? (('+' | '-' | '*' | '/' | '^' ) variable);
+
+symbol_list:
+    'symbols:' variable (',' variable)*
+;
+
+solve:
+    'solve:' variable ',' variable ',' variable
+;
+
+integrate:
+    'integrate:' variable ',' variable ',' variable
+;
+
+differentiate:
+    'differentiate:' variable ',' variable ',' variable
+;
+
+print:
+    'print:' variable
+;
+
+variable: /[a-zA-Z_][a-zA-Z_0-9]*/;
+
+NUM: /-?\d+/;
+
+Comment:
+    /#[^\n]*/; // This defines a comment line starting with #
